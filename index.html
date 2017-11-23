@@ -1,20 +1,88 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <meta charset="utf-8">
+    <script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.2.1.js" charset="utf-8"></script>
     <title>订饭页面</title>
+    <meta charset="utf-8">
   </head>
   <body>
     <div style="font-weight: bold;text-align: center;margin: 3rem auto;font-size: 2rem;">
       订饭人数为：
     </div>
     <div class="counts" style="font-weight: bold;text-align: center;font-size: 3rem;">
-      <span class="usercount">0</span>
-      / <span class="totalcount">0</span>
+      <span id="usercount">0</span>
+      / <span id="totalcount">0</span>
     </div>
     <div class="buttons" style="text-align: center;">
-      <button type="button" name="button" style="margin: 1.5rem 2rem;font-size: 2rem;">订饭</button>
-      <button type="button" name="button" style="margin: 1.5rem 2rem;font-size: 2rem;">取消</button>
+      <button id="book" type="button" name="button" style="margin: 1.5rem 2rem;font-size: 2rem;">订饭</button>
+      <button id="cancel" type="button" name="button" style="margin: 1.5rem 2rem;font-size: 2rem;">取消</button>
     </div>
+
+    <script type="text/javascript">
+      window.onload = function(){
+        function refresh() {
+          $.ajax({
+            type: 'post',
+            headers: {
+              'X-LC-Id': 'tpHGRJEgkYiFqnTzUIVq9DNM-gzGzoHsz',
+              'X-LC-Key': '8txHnAAhJ2eTMGLvubihvnHz',
+              'Content-Type': 'application/json'
+            },
+            url: 'https://tphgrjeg.engine.lncld.net/1.1/functions/usercount',
+            data: {
+              'increment': 1
+            },
+            crossDomain: true,
+            success: function(data) {
+              debugger;
+              $('#usercount').html('0');
+              $('#totalcount').html('12');
+            },
+            error: function(err) {}
+          });
+        }
+
+        $('#book').click(function() {
+          $.ajax({
+            type: 'post',
+            headers: {
+              'X-LC-Id': 'tpHGRJEgkYiFqnTzUIVq9DNM-gzGzoHsz',
+              'X-LC-Key': '8txHnAAhJ2eTMGLvubihvnHz',
+              'Content-Type': 'application/json'
+            },
+            url: 'https://tphgrjeg.engine.lncld.net/1.1/functions/usercount',
+            data: {
+              'increment': 1
+            },
+            crossDomain: true,
+            success: function(data) {
+              debugger;
+              refresh();},
+            error: function(err) {}
+          });
+          $('#usercount').html(parseInt($('#usercount').html()) + 1);
+        });
+
+        $('#cancel').click(function() {
+          $.ajax({
+            type: 'post',
+            headers: {
+              'X-LC-Id': 'tpHGRJEgkYiFqnTzUIVq9DNM-gzGzoHsz',
+              'X-LC-Key': '8txHnAAhJ2eTMGLvubihvnHz',
+              'Content-Type': 'application/json'
+            },
+            url: 'https://tphgrjeg.engine.lncld.net/1.1/functions/usercount',
+            data: {
+              'increment': -1
+            },
+            crossDomain: true,
+            success: function(data) {
+              debugger;
+              refresh();},
+            error: function(err) {}
+          });
+        });
+      }
+    </script>
   </body>
 </html>
